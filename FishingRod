@@ -1,6 +1,4 @@
-npx create-next-app fishing-rod
-cd fishing-rod
-npm install
+
 import { useState } from 'react';
 
 const Home = () => {
