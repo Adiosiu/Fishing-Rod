@@ -1,0 +1,77 @@
+npx create-next-app fishing-rod
+cd fishing-rod
+npm install
+import { useState } from 'react';
+
+const Home = () => {
+  const [fishList, setFishList] = useState([
+    { id: 1, name: 'Goldfish', quantity: 10 },
+    { id: 2, name: 'Betta', quantity: 5 },
+  ]);
+
+  const addFish = (fish) => {
+    setFishList([...fishList, { ...fish, id: fishList.length + 1 }]);
+  };
+
+  return (
+    <div>
+      <h1>Fishing Rod Fish Store Management</h1>
+      <FishList fishList={fishList} />
+      <AddFishForm addFish={addFish} />
+    </div>
+  );
+};
+
+const FishList = ({ fishList }) => (
+  <div>
+    <h2>Available Fish</h2>
+    <ul>
+      {fishList.map((fish) => (
+        <li key={fish.id}>
+          {fish.name} - Quantity: {fish.quantity}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const AddFishForm = ({ addFish }) => {
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addFish({ name, quantity: Number(quantity) });
+    setName('');
+    setQuantity('');
+  };
+
+  return (
+    <div>
+      <h2>Add New Fish</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name: </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label>Quantity: </label>
+          <input
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Add Fish</button>
+      </form>
+    </div>
+  );
+};
+
+export default Home;
